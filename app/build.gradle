@@ -1,18 +1,20 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
     namespace 'io.dvlt.themoviedbtest'
-    compileSdk 33
+    compileSdk ConfigData.compileSdkVersion
 
     defaultConfig {
         applicationId "io.dvlt.themoviedbtest"
-        minSdk 23
-        targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        minSdk ConfigData.minSdkVersion
+        targetSdk ConfigData.targetSdkVersion
+        versionCode ConfigData.versionCode
+        versionName ConfigData.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -43,17 +45,43 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.10.1'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation Deps.INSTANCE.androidCoreKtx
+    implementation Deps.INSTANCE.appCompat
+    implementation Deps.INSTANCE.material
+    implementation Deps.INSTANCE.constraintLayout
 
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+    implementation Deps.INSTANCE.lifecycleRuntimeKtx
 
-    implementation "io.ktor:ktor-client-android:2.2.1"
-    implementation "io.ktor:ktor-client-auth:2.2.1"
+    implementation Deps.INSTANCE.ktor
+    implementation Deps.INSTANCE.ktorClientAuth
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation Deps.INSTANCE.JUnit
+    androidTestImplementation Deps.INSTANCE.androidxJunit
+    androidTestImplementation Deps.INSTANCE.espresso
+
+
+    implementation Deps.INSTANCE.composeUi
+    implementation Deps.INSTANCE.composeTooling
+    implementation Deps.INSTANCE.composeMaterial
+    implementation Deps.INSTANCE.composeMaterialIconsExtended
+    implementation Deps.INSTANCE.activityCompose
+    implementation Deps.INSTANCE.paging
+    implementation Deps.INSTANCE.pagingCompose
+    implementation Deps.INSTANCE.navigationCompose
+    implementation Deps.INSTANCE.daggerHilt
+    kapt Deps.INSTANCE.daggerHiltCompiler
+    implementation Deps.INSTANCE.daggerHiltNavigation
+    implementation Deps.INSTANCE.daggerHiltNavigationCompose
+    implementation Deps.INSTANCE.retrofit
+    implementation Deps.INSTANCE.retrofitGsonConverter
+    implementation Deps.INSTANCE.okHttpLogging
+    implementation Deps.INSTANCE.jsonSerialization
+    implementation Deps.INSTANCE.coil
+
+
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }
