@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import io.dvlt.themoviedbtest.presentation.navigation.NavigationGraph
 import io.dvlt.themoviedbtest.presentation.screens.home.HomeScreen
 import io.dvlt.themoviedbtest.presentation.theme.BaseMoviesTheme
 import io.ktor.client.HttpClient
@@ -29,9 +31,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
+            val navController = rememberNavController()
             BaseMoviesTheme(darkTheme = false) {
-                HomeScreen()
+                NavigationGraph(navController = navController)
             }
         }
 

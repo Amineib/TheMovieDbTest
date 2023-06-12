@@ -4,6 +4,6 @@ import io.dvlt.themoviedbtest.presentation.model.MovieItemUi
 
 data class PagerUiState(
     val movies: List<MovieItemUi> = emptyList(),
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val errorMessage: String = ""
 )

@@ -18,5 +18,9 @@ data class MovieResponse(
     @SerializedName("vote_average")
     val voteAverage: Float?,
     @SerializedName("poster_path")
-    val posterPath: String?
+    val posterPath: String?,
+    @SerializedName("vote_count")
+    val voteCount: Float?,
+    @SerializedName("overview")
+    val synopsys: String?
 )

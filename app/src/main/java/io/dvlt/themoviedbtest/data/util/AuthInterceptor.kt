@@ -7,7 +7,7 @@ import okhttp3.Response
 class AuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val newRequest = chain.request().newBuilder()
-            .addHeader(authorizaton, bearer+ BuildConfig.tmdbApiKeyV4)
+            .addHeader(authorizaton, bearer + BuildConfig.tmdbApiKeyV4)
             .build()
         return chain.proceed(newRequest)
     }

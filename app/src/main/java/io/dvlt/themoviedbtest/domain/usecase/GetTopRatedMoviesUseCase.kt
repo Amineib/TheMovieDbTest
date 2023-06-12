@@ -4,30 +4,40 @@ import io.dvlt.themoviedbtest.domain.model.Movie
 import io.dvlt.themoviedbtest.domain.model.Resource
 import io.dvlt.themoviedbtest.domain.repository.MovieRepository
 import io.dvlt.themoviedbtest.domain.truncate
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onStart
 import retrofit2.HttpException
 import java.io.IOException
-import java.text.DecimalFormat
 
 class GetTopRatedMoviesUseCase constructor(
     private val repository: MovieRepository
 ) {
-    suspend fun getTopRatedMovies(): Resource<List<Movie>> {
-        return try {
-            val result = repository.getTopRatedMovies().map {
-                Movie(
-                    id = it.id,
-                    posterPath = it.posterPath,
-                    title = it.title,
-                    voteAverage = it.voteAverage.truncate()
-                )
+    suspend fun getTopRatedMovies(): Flow<Resource<List<Movie>>> = flow {
+        emit(
+            try {
+                val result = repository.getTopRatedMovies().map {
+                    Movie(
+                        id = it.id,
+                        posterPath = it.posterPath,
+                        title = it.title,
+                        voteAverage = it.voteAverage.truncate(),
+                        synopsys = it.synopsys,
+                        voteCount = it.voteCount
+                    )
+                }
+                Resource.Success(result)
+            } catch (e: HttpException) {
+                Resource.Error(e.localizedMessage ?: "An unexpected network error happened..")
+            } catch (e: IOException) {
+                Resource.Error("Couldn't reach server, please check your internet connection")
+            } catch (e: Throwable) {
+                Resource.Error("Unexpected error..")
             }
-            Resource.Success(result)
-        } catch (e: HttpException) {
-            Resource.Error(e.localizedMessage ?: "An unexpected network error happened..")
-        } catch (e: IOException) {
-            Resource.Error("Couldn't reach server, please check your internet connection")
-        } catch (e: Throwable) {
-            Resource.Error("Unexpected error..")
-        }
+        )
+    }.onStart {
+        emit(
+            Resource.Loading
+        )
     }
 }
