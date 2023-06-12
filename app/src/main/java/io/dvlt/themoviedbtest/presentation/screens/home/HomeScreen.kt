@@ -23,7 +23,7 @@ import io.dvlt.themoviedbtest.presentation.screens.components.ShowToast
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier = Modifier,
-    onMovieClicked : (Int) -> Unit
+    onMovieClicked: (Int) -> Unit
 ) {
     val topRatedState by viewModel.topRatedMovieState.collectAsStateWithLifecycle()
     val trendingState by viewModel.trendingMoviesState.collectAsStateWithLifecycle()
@@ -35,14 +35,16 @@ fun HomeScreen(
                 errorMessage = topRatedState.errorMessage,
                 onError = {
                     viewModel.loadData()
-                }, onMovieClicked = onMovieClicked)
+                }, onMovieClicked = onMovieClicked
+            )
 
             1 -> GenericMoviePager(movies = trendingState.movies,
                 isLoading = trendingState.isLoading,
                 errorMessage = trendingState.errorMessage,
                 onError = {
                     viewModel.loadData()
-                }, onMovieClicked = onMovieClicked)
+                }, onMovieClicked = onMovieClicked
+            )
         }
     }
 
@@ -52,7 +54,7 @@ fun HomeScreen(
 @Composable
 fun GenericMoviePager(
     isLoading: Boolean, errorMessage: String, movies: List<MovieItemUi>, onError: () -> Unit,
-    onMovieClicked : (Int) -> Unit
+    onMovieClicked: (Int) -> Unit
 ) {
     when {
         movies.isNotEmpty() -> {

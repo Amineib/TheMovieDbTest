@@ -5,6 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 
 class AuthInterceptor : Interceptor {
+    // Intercepts the request and adds the authorization header with the API key
     override fun intercept(chain: Interceptor.Chain): Response {
         val newRequest = chain.request().newBuilder()
             .addHeader(authorizaton, bearer + BuildConfig.tmdbApiKeyV4)

@@ -41,5 +41,16 @@ object Deps {
     val jUnit by lazy { "junit:junit:${Versions.jUnit}" }
     val androidxJunit by lazy { "androidx.test.ext:junit:${Versions.androidXTestJUnit}" }
     val espresso by lazy { "androidx.test.espresso:espresso-core:${Versions.espressoCore}" }
+    val mockk by lazy { "io.mockk:mockk:${Versions.mockk}" }
+    val kotlinxCorotuineTest by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinxCoroutineTest}" }
+    val mockWebserver by lazy { "com.squareup.okhttp3:mockwebserver:${Versions.mockkWebserver}" }
+
+
+    /*
+    testImplementation "io.mockk:mockk:1.13.5"
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:4.9.1'
+'
+     */
 
 }

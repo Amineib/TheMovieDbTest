@@ -13,7 +13,7 @@ import java.io.IOException
 class GetTopRatedMoviesUseCase constructor(
     private val repository: MovieRepository
 ) {
-    suspend fun getTopRatedMovies(): Flow<Resource<List<Movie>>> = flow {
+    fun getTopRatedMovies(): Flow<Resource<List<Movie>>> = flow {
         emit(
             try {
                 val result = repository.getTopRatedMovies().map {

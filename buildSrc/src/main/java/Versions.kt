@@ -14,6 +14,11 @@ object Versions {
 
 
     const val jUnit = "4.13.2"
+    const val mockk = "1.13.5"
+    const val kotlinxCoroutineTest = "1.5.2"
+    const val mockkWebserver = "4.9.1"
+    const val coreTesting = "2.1.0"
+
     const val androidXTestJUnit = "1.1.5"
     const val espressoCore = "3.5.1"
 

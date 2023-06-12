@@ -17,13 +17,6 @@ val Roboto = FontFamily(
         style = FontStyle.Normal
     )
 )
-val Nunito = FontFamily(
-    Font(
-        R.font.nunitosans_light,
-        weight = FontWeight.Normal,
-        style = FontStyle.Normal
-    )
-)
 
 // Set of Material typography styles to start with
 val Typography = Typography(

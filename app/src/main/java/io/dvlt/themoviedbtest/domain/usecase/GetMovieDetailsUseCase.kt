@@ -13,7 +13,7 @@ import javax.inject.Inject
 class GetMovieDetailsUseCase @Inject constructor(
     private val repository: MovieRepository
 ) {
-    suspend fun getMovieDetails(movieId: Int): Flow<Resource<Movie>> = flow {
+    fun getMovieDetails(movieId: Int): Flow<Resource<Movie>> = flow {
         emit(
             try {
                 Resource.Success(repository.getMovieDetail(movieId))
