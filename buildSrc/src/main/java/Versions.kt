@@ -2,6 +2,8 @@ object Versions {
     const val gradlePlugin = "7.3.1"
     const val kotlin = "1.8.10"
 
+
+
     const val coreKtx = "1.10.1"
     const val appCompat = "1.6.1"
     const val material = "1.9.0"
@@ -16,6 +18,7 @@ object Versions {
     const val espressoCore = "3.5.1"
 
     const val compose = "1.4.3"
+    const val runtimeCompose = "2.6.0"
     const val activityCompose = "1.7.2"
     const val retrofit = "2.9.0"
     const val okHttpLoggingInterceptor = "4.2.1"

@@ -22,17 +22,28 @@ android {
     buildTypes {
         debug {
             buildConfigField 'String', 'tmdbApiKeyV3', '"76909ebd17e275d556f8e0ed68bbc2b5"'
+            buildConfigField 'String', 'apiBaseUrl', '"https://api.themoviedb.org/3/"'
+            buildConfigField 'String', 'baseImageUrl', '"https://image.tmdb.org/t/p/w500"'
             buildConfigField 'String', 'tmdbApiKeyV4', '"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NjkwOWViZDE3ZTI3NWQ1NTZmOGUwZWQ2OGJiYzJiNSIsInN1YiI6IjYzOTljOWExNzdjMDFmMDBhMjE0NGRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.P4cLbLgDuQ93kq5fPWj84ioH3pbpaMFx8P1bU9Sc7VU"'
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
+            buildConfigField 'String', 'apiBaseUrl', '"https://api.themoviedb.org/3/"'
+            buildConfigField 'String', 'baseImageUrl', '"https://image.tmdb.org/t/p/w500"'
             buildConfigField 'String', 'tmdbApiKeyV3', '"76909ebd17e275d556f8e0ed68bbc2b5"'
             buildConfigField 'String', 'tmdbApiKeyV4', '"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3NjkwOWViZDE3ZTI3NWQ1NTZmOGUwZWQ2OGJiYzJiNSIsInN1YiI6IjYzOTljOWExNzdjMDFmMDBhMjE0NGRkNyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.P4cLbLgDuQ93kq5fPWj84ioH3pbpaMFx8P1bU9Sc7VU"'
         }
     }
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.2"
+    }
+
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -65,6 +76,7 @@ dependencies {
     implementation Deps.INSTANCE.composeMaterial
     implementation Deps.INSTANCE.composeMaterialIconsExtended
     implementation Deps.INSTANCE.activityCompose
+    implementation Deps.INSTANCE.lifecycleRuntimeCompose
     implementation Deps.INSTANCE.paging
     implementation Deps.INSTANCE.pagingCompose
     implementation Deps.INSTANCE.navigationCompose

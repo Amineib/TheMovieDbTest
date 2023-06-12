@@ -1,24 +1,41 @@
 package io.dvlt.themoviedbtest
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import io.ktor.client.*
-import io.ktor.client.call.*
-import io.ktor.client.request.*
-import io.ktor.http.*
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
+import io.dvlt.themoviedbtest.presentation.screens.home.HomeScreen
+import io.dvlt.themoviedbtest.presentation.theme.BaseMoviesTheme
+import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.bearerAuth
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
+import io.ktor.http.ContentType
+import io.ktor.http.contentType
+import io.ktor.http.isSuccess
+import io.ktor.http.withCharset
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        CoroutineScope(Dispatchers.IO).launch {
+        setContent {
+
+            BaseMoviesTheme(darkTheme = false) {
+                HomeScreen()
+            }
+        }
+
+        /*CoroutineScope(Dispatchers.IO).launch {
             HttpClient().use { client ->
                 val response =
                     client.get(urlString = "https://api.themoviedb.org/3/movie/top_rated") {
@@ -36,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                     Log.e("MainActivity", "Request failed: ${response.status}")
                 }
             }
-        }
+        }*/
     }
 
 }
