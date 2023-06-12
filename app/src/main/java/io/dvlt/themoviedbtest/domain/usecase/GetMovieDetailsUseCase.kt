@@ -11,14 +11,14 @@ import java.io.IOException
 import javax.inject.Inject
 
 class GetMovieDetailsUseCase @Inject constructor(
-    private val repository : MovieRepository
+    private val repository: MovieRepository
 ) {
-    suspend fun getMovieDetails(movieId : Int) : Flow<Resource<Movie>> = flow{
+    suspend fun getMovieDetails(movieId: Int): Flow<Resource<Movie>> = flow {
         emit(
             try {
                 Resource.Success(repository.getMovieDetail(movieId))
             } catch (e: HttpException) {
-                Resource.Error(e.localizedMessage ?: "An unexpected network error happened..")
+                Resource.Error("An unexpected network error happened..")
             } catch (e: IOException) {
                 Resource.Error("Couldn't reach server, please check your internet connection")
             } catch (e: Throwable) {

@@ -18,7 +18,7 @@ object DomainModule {
 
     @Singleton
     @Provides
-    fun provideMovieRepository(api: TmdbApi) : MovieRepository = MovieRepositoryImp(api)
+    fun provideMovieRepository(api: TmdbApi): MovieRepository = MovieRepositoryImp(api)
 
     @Singleton
     @Provides

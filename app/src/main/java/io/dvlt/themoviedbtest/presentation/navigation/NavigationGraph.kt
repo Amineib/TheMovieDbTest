@@ -1,6 +1,5 @@
 package io.dvlt.themoviedbtest.presentation.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,7 +19,7 @@ fun NavigationGraph(
     modifier: Modifier = Modifier
 ) {
 
-    NavHost(navController = navController, startDestination = Route.HOME ) {
+    NavHost(navController = navController, startDestination = Route.HOME) {
         composable(route = Route.HOME) {
             HomeScreen(
                 onMovieClicked = {
@@ -30,11 +29,11 @@ fun NavigationGraph(
         }
 
         composable(
-            route = Route.DETAILS +  "/{movieId}",
+            route = Route.DETAILS + "/{movieId}",
             arguments = listOf(
                 navArgument(
                     name = "movieId"
-                ){
+                ) {
                     type = NavType.IntType
                 }
             )

@@ -4,17 +4,18 @@ import io.dvlt.themoviedbtest.domain.model.Movie
 import io.dvlt.themoviedbtest.domain.model.Resource
 import io.dvlt.themoviedbtest.domain.repository.MovieRepository
 import io.dvlt.themoviedbtest.domain.truncate
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
 import retrofit2.HttpException
 import java.io.IOException
-
 class GetTrendingUseCase constructor(
     private val repository: MovieRepository
 ) {
 
-    suspend fun getTrending(): Flow<Resource<List<Movie>>> = flow {
+
+    fun getTrending(): Flow<Resource<List<Movie>>> = flow {
         emit(
             try {
                 val result = repository.getTrendingMovies().map {
@@ -33,7 +34,7 @@ class GetTrendingUseCase constructor(
             } catch (e: IOException) {
                 Resource.Error("Couldn't reach server, please check your internet connection")
             } catch (e: Throwable) {
-                Resource.Error("Unexpected error.. ${e.message} + ${e.localizedMessage}")
+                Resource.Error("Unexpected error..")
             }
         )
     }.onStart {

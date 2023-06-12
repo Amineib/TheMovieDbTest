@@ -9,6 +9,7 @@ import io.dvlt.themoviedbtest.domain.usecase.GetMovieDetailsUseCase
 import io.dvlt.themoviedbtest.presentation.mappers.toMovieDetailsUi
 import io.dvlt.themoviedbtest.presentation.mappers.toUi
 import io.dvlt.themoviedbtest.presentation.screens.details.model.MovieDetailUiState
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -33,6 +34,7 @@ class MovieDetailsViewModel @Inject constructor(
 
     fun loadMovieDetails() {
         viewModelScope.launch {
+            delay(1000)
             getMovieDetailsUseCase.getMovieDetails(movieId).collectLatest { result ->
                 when (result) {
                     is Resource.Error -> {

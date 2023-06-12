@@ -28,7 +28,7 @@ class GetTopRatedMoviesUseCase constructor(
                 }
                 Resource.Success(result)
             } catch (e: HttpException) {
-                Resource.Error(e.localizedMessage ?: "An unexpected network error happened..")
+                Resource.Error("An unexpected network error happened..")
             } catch (e: IOException) {
                 Resource.Error("Couldn't reach server, please check your internet connection")
             } catch (e: Throwable) {
