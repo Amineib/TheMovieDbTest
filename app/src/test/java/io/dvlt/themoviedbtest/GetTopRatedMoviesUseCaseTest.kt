@@ -10,7 +10,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -30,7 +30,7 @@ class GetTopRatedMoviesUseCaseTest {
     }
 
     @Test
-    fun `getTopRatedMovies should return loading and success`() = runBlockingTest {
+    fun `getTopRatedMovies should return loading and success`() = runTest {
         // Arrange
         val movies = listOf(
             Movie(1, "Movie 1", "poster1.jpg", 7.5f, synopsys = "Synopsys", voteCount = 245f),
@@ -46,7 +46,7 @@ class GetTopRatedMoviesUseCaseTest {
     }
 
     @Test
-    fun `getTopRatedMovies should return loading and error on http failure`() = runBlockingTest {
+    fun `getTopRatedMovies should return loading and error on http failure`() = runTest {
         val exception = mockk<HttpException>()
         // Arrange
         coEvery { repository.getTopRatedMovies() } throws exception
@@ -59,7 +59,7 @@ class GetTopRatedMoviesUseCaseTest {
     }
 
     @Test
-    fun `getTopRatedMovies should return loading and error on network failure`() = runBlockingTest {
+    fun `getTopRatedMovies should return loading and error on network failure`() = runTest {
         // Arrange
         coEvery { repository.getTopRatedMovies() } throws IOException()
 
@@ -71,7 +71,7 @@ class GetTopRatedMoviesUseCaseTest {
     }
 
     @Test
-    fun `getTopRatedMovies should return loading and error on unexpected error`() = runBlockingTest {
+    fun `getTopRatedMovies should return loading and error on unexpected error`() = runTest {
         // Arrange
         coEvery { repository.getTopRatedMovies() } throws RuntimeException()
 

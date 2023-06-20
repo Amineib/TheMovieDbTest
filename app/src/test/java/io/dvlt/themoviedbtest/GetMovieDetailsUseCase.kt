@@ -7,9 +7,12 @@ import io.dvlt.themoviedbtest.domain.usecase.GetMovieDetailsUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.coroutines.flow.take
+import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import retrofit2.HttpException
 import java.io.IOException
@@ -17,13 +20,20 @@ import java.io.IOException
 class GetMovieDetailsUseCaseTest {
 
     // Create a mock MovieRepository
-    private val mockRepository: MovieRepository = mockk()
+    private lateinit var mockRepository: MovieRepository
 
     // Create an instance of the use case with the mock repository
-    private val useCase = GetMovieDetailsUseCase(mockRepository)
+    private lateinit var useCase: GetMovieDetailsUseCase
+
+
+    @Before
+    fun setup() {
+        mockRepository = mockk()
+        useCase = GetMovieDetailsUseCase(mockRepository)
+    }
 
     @Test
-    fun `getMovieDetails should return movie details successfully`() = runBlockingTest {
+    fun `getMovieDetails should return movie details successfully`() = runTest {
         // Mock the movie ID and movie object
         val movieId = 123
         val movie =
@@ -43,7 +53,7 @@ class GetMovieDetailsUseCaseTest {
         val resultFlow = useCase.getMovieDetails(movieId)
 
         // Collect the result
-        val result = resultFlow.first()
+        val result = resultFlow.take(2).drop(1).first()
 
         // Verify that the result is a success and contains the correct movie
         Assert.assertTrue(result is Resource.Success)
@@ -54,7 +64,7 @@ class GetMovieDetailsUseCaseTest {
     }
 
     @Test
-    fun `getMovieDetails should return error on HTTP exception`() = runBlockingTest {
+    fun `getMovieDetails should return error on HTTP exception`() = runTest {
         // Mock the movie ID and an HTTP exception
         val movieId = 123
         val exception = mockk<HttpException>()
@@ -66,7 +76,7 @@ class GetMovieDetailsUseCaseTest {
         val resultFlow = useCase.getMovieDetails(movieId)
 
         // Collect the result
-        val result = resultFlow.first()
+        val result = resultFlow.take(2).drop(1).first()
 
         // Verify that the result is an error and contains the correct error message
         Assert.assertTrue(result is Resource.Error)
@@ -77,7 +87,7 @@ class GetMovieDetailsUseCaseTest {
     }
 
     @Test
-    fun `getMovieDetails should return error on IO exception`() = runBlockingTest {
+    fun `getMovieDetails should return error on IO exception`() = runTest {
         // Mock the movie ID and an IO exception
         val movieId = 123
         val exception = mockk<IOException>()
@@ -89,18 +99,21 @@ class GetMovieDetailsUseCaseTest {
         val resultFlow = useCase.getMovieDetails(movieId)
 
         // Collect the result
-        val result = resultFlow.first()
+        val result = resultFlow.take(2).drop(1).first()
 
         // Verify that the result is an error and contains the correct error message
         Assert.assertTrue(result is Resource.Error)
-        Assert.assertEquals("Couldn't reach server, please check your internet connection",  (result as Resource.Error).message)
+        Assert.assertEquals(
+            "Couldn't reach server, please check your internet connection",
+            (result as Resource.Error).message
+        )
 
         // Verify that the repository's getMovieDetail function was called with the correct movie ID
         coVerify { mockRepository.getMovieDetail(movieId) }
     }
 
     @Test
-    fun `getMovieDetails should return error on unexpected exception`() = runBlockingTest {
+    fun `getMovieDetails should return error on unexpected exception`() = runTest {
         // Mock the movie ID and an unexpected exception
         val movieId = 123
         val exception = mockk<Throwable>()
@@ -112,7 +125,7 @@ class GetMovieDetailsUseCaseTest {
         val resultFlow = useCase.getMovieDetails(movieId)
 
         // Collect the result
-        val result = resultFlow.first()
+        val result = resultFlow.take(2).drop(1).first()
 
         // Verify that the result is an error and contains the correct error message
         Assert.assertTrue(result is Resource.Error)

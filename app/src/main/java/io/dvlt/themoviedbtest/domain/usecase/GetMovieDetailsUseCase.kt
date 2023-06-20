@@ -25,5 +25,5 @@ class GetMovieDetailsUseCase @Inject constructor(
                 Resource.Error("Unexpected error..")
             }
         )
-    }.onStart { Resource.Loading }
+    }.onStart { emit(Resource.Loading) }
 }
