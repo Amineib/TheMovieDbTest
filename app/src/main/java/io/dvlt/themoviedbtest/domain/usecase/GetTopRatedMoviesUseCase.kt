@@ -7,8 +7,6 @@ import io.dvlt.themoviedbtest.domain.truncate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onStart
-import retrofit2.HttpException
-import java.io.IOException
 
 class GetTopRatedMoviesUseCase constructor(
     private val repository: MovieRepository
@@ -27,12 +25,8 @@ class GetTopRatedMoviesUseCase constructor(
                     )
                 }
                 Resource.Success(result)
-            } catch (e: HttpException) {
-                Resource.Error("An unexpected network error happened..")
-            } catch (e: IOException) {
-                Resource.Error("Couldn't reach server, please check your internet connection")
-            } catch (e: Throwable) {
-                Resource.Error("Unexpected error..")
+            } catch (e: Exception) {
+                Resource.Error(e)
             }
         )
     }.onStart {

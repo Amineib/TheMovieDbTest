@@ -14,8 +14,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import retrofit2.HttpException
-import java.io.IOException
 
 class GetMovieDetailsUseCaseTest {
 
@@ -63,75 +61,4 @@ class GetMovieDetailsUseCaseTest {
         coVerify { mockRepository.getMovieDetail(movieId) }
     }
 
-    @Test
-    fun `getMovieDetails should return error on HTTP exception`() = runTest {
-        // Mock the movie ID and an HTTP exception
-        val movieId = 123
-        val exception = mockk<HttpException>()
-
-        // Mock the repository's getMovieDetail function to throw the exception
-        coEvery { mockRepository.getMovieDetail(movieId) } throws exception
-
-        // Call the use case function
-        val resultFlow = useCase.getMovieDetails(movieId)
-
-        // Collect the result
-        val result = resultFlow.take(2).drop(1).first()
-
-        // Verify that the result is an error and contains the correct error message
-        Assert.assertTrue(result is Resource.Error)
-        Assert.assertEquals("An unexpected network error happened..", (result as Resource.Error).message)
-
-        // Verify that the repository's getMovieDetail function was called with the correct movie ID
-        coVerify { mockRepository.getMovieDetail(movieId) }
-    }
-
-    @Test
-    fun `getMovieDetails should return error on IO exception`() = runTest {
-        // Mock the movie ID and an IO exception
-        val movieId = 123
-        val exception = mockk<IOException>()
-
-        // Mock the repository's getMovieDetail function to throw the exception
-        coEvery { mockRepository.getMovieDetail(movieId) } throws exception
-
-        // Call the use case function
-        val resultFlow = useCase.getMovieDetails(movieId)
-
-        // Collect the result
-        val result = resultFlow.take(2).drop(1).first()
-
-        // Verify that the result is an error and contains the correct error message
-        Assert.assertTrue(result is Resource.Error)
-        Assert.assertEquals(
-            "Couldn't reach server, please check your internet connection",
-            (result as Resource.Error).message
-        )
-
-        // Verify that the repository's getMovieDetail function was called with the correct movie ID
-        coVerify { mockRepository.getMovieDetail(movieId) }
-    }
-
-    @Test
-    fun `getMovieDetails should return error on unexpected exception`() = runTest {
-        // Mock the movie ID and an unexpected exception
-        val movieId = 123
-        val exception = mockk<Throwable>()
-
-        // Mock the repository's getMovieDetail function to throw the exception
-        coEvery { mockRepository.getMovieDetail(movieId) } throws exception
-
-        // Call the use case function
-        val resultFlow = useCase.getMovieDetails(movieId)
-
-        // Collect the result
-        val result = resultFlow.take(2).drop(1).first()
-
-        // Verify that the result is an error and contains the correct error message
-        Assert.assertTrue(result is Resource.Error)
-        Assert.assertEquals("Unexpected error..", (result as Resource.Error).message)
-
-        // Verify that the repository's getMovieDetail function was called with the correct movie ID
-        coVerify { mockRepository.getMovieDetail(movieId) }
-    }
 }

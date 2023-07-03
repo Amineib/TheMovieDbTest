@@ -22,28 +22,31 @@ import io.dvlt.themoviedbtest.presentation.screens.components.ShowToast
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier = Modifier,
-    onMovieClicked: (Int) -> Unit
+    viewModel: HomeViewModel = hiltViewModel(), modifier: Modifier = Modifier, onMovieClicked: (Int) -> Unit
 ) {
     val topRatedState by viewModel.topRatedMovieState.collectAsStateWithLifecycle()
     val trendingState by viewModel.trendingMoviesState.collectAsStateWithLifecycle()
 
     HorizontalPager(modifier = modifier.fillMaxWidth(), pageCount = 2) { page ->
         when (page) {
-            0 -> GenericMoviePager(movies = topRatedState.movies,
+            0 -> GenericMoviePager(
+                movies = topRatedState.movies,
                 isLoading = topRatedState.isLoading,
                 errorMessage = topRatedState.errorMessage,
                 onError = {
                     viewModel.loadData()
-                }, onMovieClicked = onMovieClicked
+                },
+                onMovieClicked = onMovieClicked
             )
 
-            1 -> GenericMoviePager(movies = trendingState.movies,
+            1 -> GenericMoviePager(
+                movies = trendingState.movies,
                 isLoading = trendingState.isLoading,
                 errorMessage = trendingState.errorMessage,
                 onError = {
                     viewModel.loadData()
-                }, onMovieClicked = onMovieClicked
+                },
+                onMovieClicked = onMovieClicked
             )
         }
     }
@@ -53,7 +56,10 @@ fun HomeScreen(
 
 @Composable
 fun GenericMoviePager(
-    isLoading: Boolean, errorMessage: String, movies: List<MovieItemUi>, onError: () -> Unit,
+    isLoading: Boolean,
+    errorMessage: String,
+    movies: List<MovieItemUi>,
+    onError: () -> Unit,
     onMovieClicked: (Int) -> Unit
 ) {
     when {
@@ -72,7 +78,7 @@ fun GenericMoviePager(
         }
 
         isLoading -> LoadingScreen()
-        !errorMessage.isEmpty() -> {
+        errorMessage.isNotEmpty() -> {
             ErrorScreen(onClick = onError)
             ShowToast(message = errorMessage)
         }

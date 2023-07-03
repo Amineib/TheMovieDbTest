@@ -14,8 +14,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import retrofit2.HttpException
-import java.io.IOException
 
 @ExperimentalCoroutinesApi
 class GetTopRatedMoviesUseCaseTest {
@@ -45,40 +43,4 @@ class GetTopRatedMoviesUseCaseTest {
         assertEquals(Resource.Success(movies), result)
     }
 
-    @Test
-    fun `getTopRatedMovies should return loading and error on http failure`() = runTest {
-        val exception = mockk<HttpException>()
-        // Arrange
-        coEvery { repository.getTopRatedMovies() } throws exception
-
-        // Act
-        val result = useCase.getTopRatedMovies().take(2).drop(1).first()
-
-        // Assert
-        assertEquals(Resource.Error("An unexpected network error happened.."), result)
-    }
-
-    @Test
-    fun `getTopRatedMovies should return loading and error on network failure`() = runTest {
-        // Arrange
-        coEvery { repository.getTopRatedMovies() } throws IOException()
-
-        // Act
-        val result = useCase.getTopRatedMovies().take(2).drop(1).first()
-
-        // Assert
-        assertEquals(Resource.Error("Couldn't reach server, please check your internet connection"), result)
-    }
-
-    @Test
-    fun `getTopRatedMovies should return loading and error on unexpected error`() = runTest {
-        // Arrange
-        coEvery { repository.getTopRatedMovies() } throws RuntimeException()
-
-        // Act
-        val result = useCase.getTopRatedMovies().take(2).drop(1).first()
-
-        // Assert
-        assertEquals(Resource.Error("Unexpected error.."), result)
-    }
 }

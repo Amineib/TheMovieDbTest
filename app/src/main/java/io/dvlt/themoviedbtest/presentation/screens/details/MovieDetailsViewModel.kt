@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.dvlt.themoviedbtest.domain.model.Resource
 import io.dvlt.themoviedbtest.domain.usecase.GetMovieDetailsUseCase
 import io.dvlt.themoviedbtest.presentation.mappers.toMovieDetailsUi
-import io.dvlt.themoviedbtest.presentation.mappers.toUi
 import io.dvlt.themoviedbtest.presentation.screens.details.model.MovieDetailUiState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,7 +38,7 @@ class MovieDetailsViewModel @Inject constructor(
                 when (result) {
                     is Resource.Error -> {
                         _movieDetailsUiState.emit(
-                            MovieDetailUiState(errorMessage = result.message)
+                            MovieDetailUiState(errorMessage = result.error.message.toString())
                         )
                     }
 

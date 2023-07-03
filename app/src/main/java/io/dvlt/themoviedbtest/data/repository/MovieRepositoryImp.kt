@@ -11,7 +11,7 @@ import javax.inject.Inject
 class MovieRepositoryImp @Inject constructor(
     private val api: TmdbApi
 ) : MovieRepository {
-    suspend override fun getTopRatedMovies(): List<Movie> {
+    override suspend fun getTopRatedMovies(): List<Movie> {
         return api.getTopRatedMovies().results.map {
             it.toDomain()
         }

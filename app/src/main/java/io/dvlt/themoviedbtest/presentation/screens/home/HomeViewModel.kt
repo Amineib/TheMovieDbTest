@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
                 when (result) {
                     is Resource.Error -> {
                         _topRatedMovieState.emit(
-                            PagerUiState(errorMessage = result.message)
+                            PagerUiState(errorMessage = result.error.message.toString())
                         )
                     }
 
@@ -64,7 +64,7 @@ class HomeViewModel @Inject constructor(
                 when (result) {
                     is Resource.Error -> {
                         _trendingMoviesState.emit(
-                            PagerUiState(errorMessage = result.message)
+                            PagerUiState(errorMessage = result.error.message.toString())
                         )
                     }
 

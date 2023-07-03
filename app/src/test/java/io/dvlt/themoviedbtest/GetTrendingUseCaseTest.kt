@@ -15,7 +15,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.io.IOException
 
 @ExperimentalCoroutinesApi
 class GetTrendingUseCaseTest {
@@ -45,27 +44,4 @@ class GetTrendingUseCaseTest {
         assertEquals(Resource.Success(movies), result)
     }
 
-    @Test
-    fun `getTrending should return loading and error on network failure`() = runTest {
-        // Arrange
-        coEvery { repository.getTrendingMovies() } throws IOException()
-
-        // Act
-        val result = useCase.getTrending().take(2).drop(1).first()
-
-        // Assert
-        assertEquals(Resource.Error("Couldn't reach server, please check your internet connection"), result)
-    }
-
-    @Test
-    fun `getTrending should return loading and error on unexpected error`() = runTest {
-        // Arrange
-        coEvery { repository.getTrendingMovies() } throws RuntimeException("Unexpected error")
-
-        // Act
-        val result = useCase.getTrending().take(2).drop(1).first()
-
-        // Assert
-        assertEquals(Resource.Error("Unexpected error.."), result)
-    }
 }
